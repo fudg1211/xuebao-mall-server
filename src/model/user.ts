@@ -2,7 +2,7 @@
  * @Description: 用户model
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-12 15:54:06
+ * @LastEditTime: 2021-07-12 19:35:57
  */
 import { EntityModel } from '@midwayjs/orm';
 import {
@@ -18,8 +18,8 @@ export enum Status {
 }
 
 export enum IsHasConpon {
-  NO = 1,
-  YES = 0,
+  NO = 0,
+  YES = 1,
 }
 
 export enum IsDel {
@@ -47,12 +47,14 @@ export class User {
   openid: string;
 
   @Column({
+    nullable: true,
     comment: 'wx unionid',
   })
   unionid: string;
 
   @Column({
     length: 64,
+    default: '雪宝用户',
     comment: '名称',
   })
   name: string;

@@ -2,9 +2,9 @@
  * @Description:
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-12 17:29:07
+ * @LastEditTime: 2021-07-12 20:57:16
  */
-import { Provide, Config } from '@midwayjs/decorator';
+import { Provide, App } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
 import { Repository } from 'typeorm';
 const jwt = require('jsonwebtoken');
@@ -22,8 +22,8 @@ export interface IauthorizationReg {
 
 @Provide()
 export class UserService {
-  @Config()
-  config;
+  @App()
+  app;
 
   @InjectEntityModel(User)
   userModel: Repository<User>;
@@ -38,10 +38,12 @@ export class UserService {
   async login(code: string) {
     const res: any = await this.jscode2session(code);
     const userRow = await this.userModel.findOne({
-      where: res.openid,
+      where: {
+        openid: res.openid,
+      },
     });
     let userId = undefined;
-    if (userRow) {
+    if (!userRow) {
       userId = await this.reg(res);
     } else {
       userId = userRow.id;
@@ -53,7 +55,7 @@ export class UserService {
   /** 解密 */
   async decryptToken(token: string) {
     const userId = await new Promise(resolve => {
-      jwt.verify(token, this.config.secret, (err, decoded) => {
+      jwt.verify(token, this.app.config.secret, (err, decoded) => {
         if (err) {
           throw '解密失败';
         } else {
@@ -66,26 +68,23 @@ export class UserService {
 
   /** 加密 */
   async encryptToken(id) {
-    const token = jwt.sign({ id }, this.config.secret, {
+    const token = jwt.sign({ id }, this.app.config.secret, {
       expiresIn: 60 * 60 * 24 * 30,
     });
     return token;
   }
 
   async jscode2session(code: string) {
-    const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${this.config.wx.appid}&secret=${this.config.wx.secret}&js_code=${code}&grant_type=authorization_code`;
-
+    const wxConfig = this.app.config.wx;
+    const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${wxConfig.appid}&secret=${wxConfig.secret}&js_code=${code}&grant_type=authorization_code`;
     const res = await new Promise(resolve => {
-      https.get(url, (error, response, body) => {
-        console.log(error, response, body);
-        if (error) {
-          throw '解码失败';
-        } else {
+      https.get(url, res => {
+        res.on('data', d => {
+          const params = JSON.parse(d.toString());
           resolve({
-            openid: 'openidopenidopenidopenid',
-            unionid: 'sunionidunionidunionidunionid',
+            openid: params.openid,
           });
-        }
+        });
       });
     });
     return res;
@@ -99,7 +98,6 @@ export class UserService {
     const user = new User();
     user.id = options.id;
     user.openid = options.openid;
-    user.unionid = options.unionid;
     const userRow = await this.userModel.save(user);
     return userRow.id;
   }

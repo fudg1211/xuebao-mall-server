@@ -2,7 +2,7 @@
  * @Description:
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-12 16:48:02
+ * @LastEditTime: 2021-07-12 21:03:31
  */
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
@@ -15,7 +15,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1625896897604_1243';
 
   // add your config here
-  config.middleware = ['reportMiddleware'];
+  config.middleware = ['authMiddleware'];
 
   config.midwayFeature = {
     // true 代表使用 midway logger
@@ -35,6 +35,13 @@ export default (appInfo: EggAppInfo) => {
   // config.security = {
   //   csrf: false,
   // };
+
+  config.onerror = {
+    all(err, ctx) {
+      console.log(err, 'onerror');
+      ctx.body = err.message.replace('non-error thrown: ', '');
+    },
+  };
 
   return config;
 };
