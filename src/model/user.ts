@@ -2,7 +2,7 @@
  * @Description: 用户model
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-12 19:35:57
+ * @LastEditTime: 2021-07-13 22:50:32
  */
 import { EntityModel } from '@midwayjs/orm';
 import {
@@ -96,6 +96,11 @@ export class User {
     comment: '是否删除',
   })
   isDel: boolean;
+
+  @Column({
+    comment: '默认提货点id',
+  })
+  defaultStationId: number;
 
   @CreateDateColumn()
   createdAt: Date;

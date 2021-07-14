@@ -1,8 +1,8 @@
 /*
- * @Description:
+ * @Description:商品controller
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-11 10:45:06
+ * @LastEditTime: 2021-07-14 11:12:22
  */
 import { Controller, Get, Provide } from '@midwayjs/decorator';
 

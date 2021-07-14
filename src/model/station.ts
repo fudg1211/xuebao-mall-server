@@ -2,7 +2,7 @@
  * @Description: 提货点model
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-11 17:22:25
+ * @LastEditTime: 2021-07-14 11:52:20
  */
 import { EntityModel } from '@midwayjs/orm';
 import {
@@ -19,24 +19,31 @@ export class Station {
 
   @Column({
     length: 16,
-    comment: '收货省份',
+    comment: '提货点省份',
   })
-  provinceName: string;
+  province: string;
 
   @Column({
     length: 16,
-    comment: '收货城市',
+    comment: '提货点城市',
   })
-  cityName: string;
+  city: string;
 
   @Column({
     length: 16,
-    comment: '收货区域',
+    comment: '提货点区域',
   })
-  countyName: string;
+  district: string;
 
   @Column({
-    comment: '收货详细地址',
+    length: 16,
+    nullable: true,
+    comment: '街道',
+  })
+  street: string;
+
+  @Column({
+    comment: '提货点详细地址',
   })
   detail: string;
 
@@ -54,13 +61,13 @@ export class Station {
 
   @Column({
     type: 'double',
-    comment: '收货人地址经度',
+    comment: '提货点人地址经度',
   })
   longitude: number;
 
   @Column({
     type: 'double',
-    comment: '收货人地址纬度',
+    comment: '提货点人地址纬度',
   })
   latitude: number;
 

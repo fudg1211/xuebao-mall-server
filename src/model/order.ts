@@ -2,7 +2,7 @@
  * @Description: 订单model
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-11 12:22:47
+ * @LastEditTime: 2021-07-14 11:54:19
  */
 import { EntityModel } from '@midwayjs/orm';
 import {
@@ -132,13 +132,20 @@ export class Order {
     length: 16,
     comment: '收货城市',
   })
-  addressCityName: string;
+  addressCity: string;
 
   @Column({
     length: 16,
     comment: '收货区域',
   })
-  addressCountyName: string;
+  addressDistrict: string;
+
+  @Column({
+    length: 16,
+    nullable: true,
+    comment: '收货街道',
+  })
+  addressstreet: string;
 
   @Column({
     comment: '收货详细地址',
@@ -184,13 +191,20 @@ export class Order {
     length: 16,
     comment: '提货点城市',
   })
-  stationCityName: string;
+  stationCity: string;
 
   @Column({
     length: 16,
     comment: '提货点区域',
   })
-  stationCountyName: string;
+  stationDistrict: string;
+
+  @Column({
+    length: 16,
+    nullable: true,
+    comment: '提货点街道',
+  })
+  stationStreet: string;
 
   @Column({
     comment: '提货点详细地址',

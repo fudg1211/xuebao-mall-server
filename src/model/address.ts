@@ -2,7 +2,7 @@
  * @Description:地址model
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-11 17:22:57
+ * @LastEditTime: 2021-07-14 11:52:08
  */
 import { EntityModel } from '@midwayjs/orm';
 import {
@@ -26,19 +26,26 @@ export class Address {
     length: 16,
     comment: '收货省份',
   })
-  provinceName: string;
+  province: string;
 
   @Column({
     length: 16,
     comment: '收货城市',
   })
-  cityName: string;
+  city: string;
 
   @Column({
     length: 16,
     comment: '收货区域',
   })
-  countyName: string;
+  district: string;
+
+  @Column({
+    length: 16,
+    nullable: true,
+    comment: '收货街道',
+  })
+  street: string;
 
   @Column({
     comment: '收货详细地址',
@@ -61,7 +68,7 @@ export class Address {
     type: 'enum',
     enum: IsDefault,
     default: IsDefault.NO,
-    comment: '收货姓名',
+    comment: '是否默认',
   })
   isDefault: boolean;
 

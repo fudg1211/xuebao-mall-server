@@ -1,8 +1,8 @@
 /*
- * @Description:
+ * @Description:用户services
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-12 20:57:16
+ * @LastEditTime: 2021-07-14 11:51:17
  */
 import { Provide, App } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 const jwt = require('jsonwebtoken');
 const https = require('https');
 import { User } from '../model/user';
+import { Station } from '../model/station';
 
 export interface IauthorizationReg {
   /** 昵称*/
@@ -27,6 +28,9 @@ export class UserService {
 
   @InjectEntityModel(User)
   userModel: Repository<User>;
+
+  @InjectEntityModel(Station)
+  stationModel: Repository<Station>;
 
   async getUser() {}
 
@@ -113,5 +117,23 @@ export class UserService {
       sex: options.gender,
       id: 1,
     });
+  }
+
+  /**
+   * 获取默认提货点
+   * @returns
+   */
+  async getDefaultStation() {
+    const userRow = await this.userModel.findOne({
+      where: { id: this.app.userId },
+    });
+    if (!userRow) {
+      throw '没有该用户';
+    }
+    const stationRow = await this.stationModel.findOne({
+      where: { id: userRow.defaultStationId },
+    });
+
+    return stationRow ? stationRow.city : '';
   }
 }

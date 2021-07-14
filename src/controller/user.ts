@@ -1,8 +1,8 @@
 /*
- * @Description:首页controller
+ * @Description:用户controller
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-12 20:51:32
+ * @LastEditTime: 2021-07-13 21:07:38
  */
 import { Controller, Post, Provide, Inject, Body } from '@midwayjs/decorator';
 import { UserService } from '../service/user';
@@ -22,5 +22,13 @@ export class UserController {
   async login(@Body() code: string) {
     const token = await this.userService.login(code);
     return token;
+  }
+
+  /**
+   * 获取初始提货点
+   */
+  @Post('/getDefaultStation/')
+  async getDefaultStation() {
+    return this.userService.getDefaultStation();
   }
 }
