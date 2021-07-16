@@ -1,28 +1,28 @@
 /*
- * @Description: 提货点services
+ * @Description: 地址services
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-14 16:55:20
+ * @LastEditTime: 2021-07-14 16:57:23
  */
 import { Provide, App } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/orm';
 import { Repository } from 'typeorm';
-import { Station } from '../model/station';
+import { Address } from '../model/address';
 
 @Provide()
-export class StationService {
+export class AddressService {
   @App()
   app;
 
-  @InjectEntityModel(Station)
-  stationModel: Repository<Station>;
+  @InjectEntityModel(Address)
+  addressModel: Repository<Address>;
 
   /**
    * 获取默认提货点
    * @returns
    */
-  async save(station: Station) {
-    return this.stationModel.save(station);
+  async save(address: Address) {
+    return this.addressModel.save(address);
   }
 
   /**
@@ -31,10 +31,10 @@ export class StationService {
    * @returns
    */
   async getById(id: number) {
-    const stationRow = await this.stationModel.findOne({ id });
-    if (!stationRow) {
+    const addressRow = await this.addressModel.findOne({ id });
+    if (!addressRow) {
       throw '提货点错误';
     }
-    return stationRow;
+    return addressRow;
   }
 }

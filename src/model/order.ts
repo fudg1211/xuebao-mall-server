@@ -2,7 +2,7 @@
  * @Description: 订单model
  * @Author: huajian
  * @LastEditors: huajian
- * @LastEditTime: 2021-07-14 11:54:19
+ * @LastEditTime: 2021-07-14 17:33:04
  */
 import { EntityModel } from '@midwayjs/orm';
 import {
@@ -53,32 +53,6 @@ export class Order {
   userId: number;
 
   @Column({
-    comment: '商品id',
-  })
-  itemId: number;
-
-  @Column({
-    comment: '商品名称',
-  })
-  itemName: string;
-
-  @Column({
-    comment: '商品主图地址',
-  })
-  itemImage: string;
-
-  @Column({
-    type: 'simple-array',
-    comment: '商品描述',
-  })
-  itemDescImageList: string[];
-
-  @Column({
-    comment: '已经卖出多少',
-  })
-  itemSoldCount: number;
-
-  @Column({
     type: 'enum',
     enum: IsHasConpon,
     default: IsUsedConpon.NO,
@@ -123,117 +97,48 @@ export class Order {
   urgent: boolean;
 
   @Column({
-    length: 16,
-    comment: '收货省份',
+    comment: '商品名称',
   })
-  addressProvinceName: string;
+  itemName: string;
 
   @Column({
-    length: 16,
-    comment: '收货城市',
+    comment: '商品id',
   })
-  addressCity: string;
+  itemId: number;
 
   @Column({
-    length: 16,
-    comment: '收货区域',
+    type: 'text',
+    comment: '商品数据',
   })
-  addressDistrict: string;
+  itemRow: string;
 
   @Column({
-    length: 16,
-    nullable: true,
-    comment: '收货街道',
+    comment: '收货地址id',
   })
-  addressstreet: string;
+  addressId: number;
 
   @Column({
-    comment: '收货详细地址',
+    type: 'text',
+    comment: '收货地址数据',
   })
-  addressDetail: string;
+  addressRow: string;
 
   @Column({
-    type: 'bigint',
-    comment: '收货人电话',
-  })
-  addressTel: number;
-
-  @Column({
-    length: 16,
-    comment: '收货姓名',
-  })
-  addressUserName: string;
-
-  @Column({
-    type: 'double',
-    comment: '收货人地址经度',
-  })
-  addressLongitude: number;
-
-  @Column({
-    type: 'double',
-    comment: '收货人地址纬度',
-  })
-  addressLatitude: number;
-
-  @Column({
-    comment: '提货点',
+    comment: '提货点id',
   })
   stationId: number;
 
   @Column({
-    length: 16,
-    comment: '提货点省份',
+    type: 'text',
+    comment: '提货点数据',
   })
-  stationProvinceName: string;
+  stationRow: string;
 
   @Column({
-    length: 16,
-    comment: '提货点城市',
+    type: 'text',
+    comment: 'sku数据，这个是代码配置的',
   })
-  stationCity: string;
-
-  @Column({
-    length: 16,
-    comment: '提货点区域',
-  })
-  stationDistrict: string;
-
-  @Column({
-    length: 16,
-    nullable: true,
-    comment: '提货点街道',
-  })
-  stationStreet: string;
-
-  @Column({
-    comment: '提货点详细地址',
-  })
-  stationDetail: string;
-
-  @Column({
-    type: 'bigint',
-    comment: '提货点电话',
-  })
-  stationTel: number;
-
-  @Column({
-    length: 16,
-    comment: '提货点名称',
-  })
-  stationName: string;
-
-  @Column({
-    type: 'double',
-    comment: '提货点经度',
-  })
-  stationLongitude: number;
-
-  @Column({
-    type: 'double',
-    comment: '提货点纬度',
-  })
-  stationLatitude: number;
+  skuRow: string;
 
   @CreateDateColumn()
   createdAt: Date;

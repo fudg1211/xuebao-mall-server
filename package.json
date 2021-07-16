@@ -16,7 +16,8 @@
     "request": "^2.88.2",
     "sequelize": "^6.6.5",
     "sequelize-typescript": "^2.1.0",
-    "typeorm": "^0.2.34"
+    "typeorm": "^0.2.34",
+    "validate": "^5.1.0"
   },
   "devDependencies": {
     "@midwayjs/cli": "^1.0.0",
